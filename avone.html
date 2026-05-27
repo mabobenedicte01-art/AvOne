@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AvOne – Communication</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b3e;
+    --green-light: #7ed321;
+    --green-mid: #5ab800;
+    --green-dark: #3a8000;
+    --white: #ffffff;
+    --off-white: #f4f6fa;
+    --gray: #8a95a8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 6vw;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(13,27,62,0.08);
+    animation: slideDown .6s ease both;
+  }
+  @keyframes slideDown { from { transform: translateY(-100%); opacity:0; } to { transform: none; opacity:1; } }
+
+  .nav-logo img { height: 46px; }
+
+  .nav-links { display: flex; gap: 34px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-family: 'Syne', sans-serif; font-size: .85rem;
+    font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--navy); transition: color .25s;
+  }
+  .nav-links a:hover { color: var(--green-mid); }
+
+  .nav-cta {
+    background: var(--navy); color: var(--white);
+    padding: 10px 24px; border-radius: 40px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: .82rem;
+    letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+    transition: background .25s, transform .2s;
+  }
+  .nav-cta:hover { background: var(--green-mid); transform: translateY(-2px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+    padding: 120px 6vw 80px;
+    background: var(--off-white);
+    position: relative; overflow: hidden;
+  }
+
+  /* animated background shape */
+  .hero::before {
+    content: '';
+    position: absolute; right: -120px; top: -80px;
+    width: 620px; height: 620px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(126,211,33,.18) 0%, rgba(126,211,33,0) 70%);
+    animation: pulse 6s ease-in-out infinite alternate;
+  }
+  @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.12); } }
+
+  .hero-text { animation: fadeUp .8s .2s ease both; }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(40px); } to { opacity:1; transform: none; } }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--navy); color: var(--green-light);
+    padding: 7px 18px; border-radius: 40px;
+    font-family: 'Syne', sans-serif; font-size: .78rem;
+    font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero-tag span { width: 8px; height: 8px; background: var(--green-light); border-radius: 50%; animation: blink 1.4s infinite; }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif; font-size: clamp(2.8rem, 5vw, 4.4rem);
+    font-weight: 800; line-height: 1.08; color: var(--navy);
+    margin-bottom: 24px;
+  }
+  .hero h1 em { font-style: normal; color: var(--green-mid); }
+
+  .hero p {
+    font-size: 1.08rem; line-height: 1.7; color: #4a5568;
+    max-width: 480px; margin-bottom: 40px;
+  }
+
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+    color: var(--navy); padding: 14px 32px; border-radius: 40px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem;
+    letter-spacing: .04em; text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 6px 24px rgba(90,184,0,.35);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(90,184,0,.5); }
+
+  .btn-outline {
+    border: 2px solid var(--navy); color: var(--navy);
+    padding: 14px 32px; border-radius: 40px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem;
+    letter-spacing: .04em; text-decoration: none;
+    transition: background .2s, color .2s;
+  }
+  .btn-outline:hover { background: var(--navy); color: var(--white); }
+
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    animation: fadeUp .8s .4s ease both;
+  }
+
+  .hero-card-wrap {
+    position: relative; width: 380px; height: 380px;
+  }
+
+  .hero-ring {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    border: 3px dashed rgba(90,184,0,.4);
+    animation: spin 18s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hero-center {
+    position: absolute; inset: 30px;
+    background: var(--navy); border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: var(--white);
+    box-shadow: 0 20px 60px rgba(13,27,62,.35);
+  }
+  .hero-center .stat { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: var(--green-light); }
+  .hero-center .stat-label { font-size: .85rem; color: rgba(255,255,255,.6); letter-spacing: .06em; }
+
+  .orbit-dot {
+    position: absolute; width: 54px; height: 54px; border-radius: 50%;
+    background: var(--white); box-shadow: 0 4px 18px rgba(0,0,0,.14);
+    display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+  }
+  .orbit-dot:nth-child(2) { top: 0; left: 50%; transform: translateX(-50%); }
+  .orbit-dot:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%); }
+  .orbit-dot:nth-child(4) { top: 50%; left: 0; transform: translateY(-50%); }
+  .orbit-dot:nth-child(5) { top: 50%; right: 0; transform: translateY(-50%); }
+
+  /* ── SERVICES ── */
+  .section { padding: 100px 6vw; }
+  .section-label {
+    font-family: 'Syne', sans-serif; font-size: .78rem; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--green-mid);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 800; color: var(--navy); margin-bottom: 18px;
+  }
+  .section-sub { color: var(--gray); font-size: 1.05rem; max-width: 540px; line-height: 1.7; margin-bottom: 60px; }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px;
+  }
+
+  .service-card {
+    background: var(--off-white); border-radius: 20px; padding: 36px 28px;
+    border: 1.5px solid transparent;
+    transition: border-color .3s, transform .3s, box-shadow .3s;
+    cursor: default;
+  }
+  .service-card:hover {
+    border-color: var(--green-light);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(90,184,0,.14);
+  }
+  .service-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--navy), #1a3a7a);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 22px;
+  }
+  .service-card h3 {
+    font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 10px;
+  }
+  .service-card p { font-size: .92rem; color: var(--gray); line-height: 1.65; }
+
+  /* ── STATS BANNER ── */
+  .stats-banner {
+    background: var(--navy); padding: 70px 6vw;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center;
+  }
+  .stat-item .num {
+    font-family: 'Syne', sans-serif; font-size: 2.8rem; font-weight: 800;
+    color: var(--green-light); display: block; margin-bottom: 6px;
+  }
+  .stat-item .lbl { color: rgba(255,255,255,.55); font-size: .9rem; letter-spacing: .04em; }
+
+  /* ── GALLERY ── */
+  .gallery { background: var(--off-white); }
+  .gallery-grid {
+    columns: 3; gap: 16px; column-gap: 16px;
+  }
+  .gallery-item {
+    break-inside: avoid; border-radius: 16px; overflow: hidden;
+    margin-bottom: 16px; cursor: pointer; position: relative;
+  }
+  .gallery-item img { width: 100%; display: block; transition: transform .4s; }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,27,62,.8) 0%, transparent 60%);
+    opacity: 0; transition: opacity .3s;
+    display: flex; align-items: flex-end; padding: 20px;
+    color: var(--white); font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+  /* placeholder gallery images using CSS gradients */
+  .gal-img {
+    width: 100%; border-radius: 16px;
+    display: block; aspect-ratio: auto;
+  }
+  .g1 { aspect-ratio: 4/3; background: linear-gradient(135deg, #0d1b3e 0%, #1a3a7a 100%); }
+  .g2 { aspect-ratio: 3/4; background: linear-gradient(135deg, #5ab800 0%, #7ed321 100%); }
+  .g3 { aspect-ratio: 1/1; background: linear-gradient(135deg, #0d1b3e 40%, #5ab800 100%); }
+  .g4 { aspect-ratio: 16/9; background: linear-gradient(135deg, #1a3a7a 0%, #3a8000 100%); }
+  .g5 { aspect-ratio: 3/4; background: linear-gradient(160deg, #7ed321 0%, #0d1b3e 100%); }
+  .g6 { aspect-ratio: 4/3; background: linear-gradient(135deg, #3a8000 0%, #1a3a7a 100%); }
+  .g7 { aspect-ratio: 1/1; background: linear-gradient(135deg, #0d1b3e 0%, #7ed321 60%); }
+  .g8 { aspect-ratio: 3/4; background: linear-gradient(135deg, #5ab800 20%, #0d1b3e 100%); }
+  .g9 { aspect-ratio: 4/3; background: linear-gradient(135deg, #1a3a7a 0%, #5ab800 100%); }
+
+  /* gallery icons */
+  .gal-icon {
+    width: 100%; display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; color: rgba(255,255,255,.5);
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .about-img-wrap {
+    position: relative; border-radius: 24px; overflow: hidden;
+    background: linear-gradient(135deg, var(--navy) 0%, #1a3a7a 100%);
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  }
+  .about-img-wrap .big-icon { font-size: 8rem; opacity: .2; }
+  .about-badge {
+    position: absolute; bottom: 24px; left: 24px;
+    background: var(--green-mid); color: var(--white);
+    padding: 12px 20px; border-radius: 14px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: .88rem;
+  }
+  .about-text .section-sub { margin-bottom: 32px; }
+  .about-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .about-list li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: .95rem; color: #4a5568;
+  }
+  .about-list li::before {
+    content: ''; width: 22px; height: 22px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230d1b3e'%3E%3Cpath d='M9 12l2 2 4-4'/%3E%3C/svg%3E");
+    background-size: 16px; background-repeat: no-repeat; background-position: center;
+  }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a3a7a 60%, #0d3020 100%);
+    padding: 90px 6vw; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-band::before {
+    content: '';
+    position: absolute; left: 50%; top: -100px; transform: translateX(-50%);
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(126,211,33,.12) 0%, transparent 70%);
+  }
+  .cta-band h2 {
+    font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 3.5vw, 3rem);
+    font-weight: 800; color: var(--white); margin-bottom: 20px; position: relative;
+  }
+  .cta-band h2 em { font-style: normal; color: var(--green-light); }
+  .cta-band p { color: rgba(255,255,255,.6); font-size: 1.05rem; max-width: 520px; margin: 0 auto 40px; position: relative; }
+  .cta-band .btn-primary { font-size: 1rem; padding: 16px 40px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); padding: 60px 6vw 30px;
+    color: rgba(255,255,255,.5);
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px;
+    padding-bottom: 50px; border-bottom: 1px solid rgba(255,255,255,.1);
+    margin-bottom: 30px;
+  }
+  .footer-brand img { height: 40px; margin-bottom: 16px; filter: brightness(0) invert(1); }
+  .footer-brand p { font-size: .9rem; line-height: 1.7; }
+  .footer-col h4 {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: .85rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--white);
+    margin-bottom: 18px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { color: rgba(255,255,255,.5); text-decoration: none; font-size: .9rem; transition: color .2s; }
+  .footer-col ul a:hover { color: var(--green-light); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: .82rem; }
+  .footer-bottom a { color: var(--green-light); text-decoration: none; }
+
+  /* ── WHATSAPP FAB ── */
+  .wa-fab {
+    position: fixed; bottom: 28px; right: 28px; z-index: 200;
+    width: 62px; height: 62px; border-radius: 50%;
+    background: #25d366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 28px rgba(37,211,102,.5);
+    text-decoration: none;
+    animation: bounce 2.5s ease-in-out infinite;
+    transition: transform .2s;
+  }
+  .wa-fab:hover { transform: scale(1.12); animation: none; }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .wa-fab svg { width: 32px; height: 32px; fill: #fff; }
+
+  .wa-tooltip {
+    position: fixed; bottom: 38px; right: 100px; z-index: 199;
+    background: var(--white); color: var(--navy);
+    padding: 10px 16px; border-radius: 30px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: .82rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    opacity: 0; transform: translateX(10px);
+    transition: opacity .3s, transform .3s;
+    pointer-events: none; white-space: nowrap;
+  }
+  .wa-fab:hover ~ .wa-tooltip { opacity: 1; transform: translateX(0); }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 900px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .hero p { margin-inline: auto; }
+    .hero-btns { justify-content: center; }
+    .hero-visual { margin-top: 50px; }
+    .stats-banner { grid-template-columns: 1fr 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .gallery-grid { columns: 2; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media(max-width: 600px) {
+    .nav-links { display: none; }
+    .gallery-grid { columns: 1; }
+    .stats-banner { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+
+  /* scroll reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="/mnt/user-data/uploads/Design_sans_titre.png" alt="AvOne">
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Galerie</a></li>
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Nous contacter</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <div class="hero-tag"><span></span>Agence de Communication</div>
+    <h1>Votre <em>message</em>,<br>notre expertise.</h1>
+    <p>AvOne conçoit des stratégies de communication percutantes qui propulsent votre marque au sommet. Créativité, impact, résultats.</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">Découvrir nos services</a>
+      <a href="#gallery" class="btn-outline">Voir nos projets</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card-wrap">
+      <div class="hero-ring"></div>
+      <div class="hero-center">
+        <span class="stat">+200</span>
+        <span class="stat-label">Projets réalisés</span>
+      </div>
+      <div class="orbit-dot">📣</div>
+      <div class="orbit-dot">⚡</div>
+      <div class="orbit-dot">🎯</div>
+      <div class="orbit-dot">💡</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="reveal">
+    <p class="section-label">Ce que nous faisons</p>
+    <h2 class="section-title">Des solutions qui font la différence</h2>
+    <p class="section-sub">De la stratégie à l'exécution, nous couvrons tous vos besoins en communication avec une approche sur-mesure.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <h3>Réseaux Sociaux</h3>
+      <p>Gestion et animation de vos pages, création de contenus engageants, croissance organique et publicité ciblée.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎨</div>
+      <h3>Identité Visuelle</h3>
+      <p>Création de logos, chartes graphiques et supports de communication qui reflètent l'essence de votre marque.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📸</div>
+      <h3>Production Photo & Vidéo</h3>
+      <p>Shooting professionnel, reportages, vidéos institutionnelles et contenus créatifs pour vos campagnes.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌐</div>
+      <h3>Web & Digital</h3>
+      <p>Conception de sites web modernes, landing pages et expériences digitales optimisées pour convertir.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>Stratégie & Conseil</h3>
+      <p>Analyse de marché, positionnement de marque et plans de communication adaptés à vos objectifs.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📰</div>
+      <h3>Relations Presse</h3>
+      <p>Communiqués, dossiers de presse et relations médias pour maximiser la visibilité de votre entreprise.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BANNER -->
+<div class="stats-banner reveal">
+  <div class="stat-item"><span class="num">200+</span><span class="lbl">Clients satisfaits</span></div>
+  <div class="stat-item"><span class="num">8+</span><span class="lbl">Années d'expérience</span></div>
+  <div class="stat-item"><span class="num">500+</span><span class="lbl">Projets livrés</span></div>
+  <div class="stat-item"><span class="num">98%</span><span class="lbl">Taux de satisfaction</span></div>
+</div>
+
+<!-- GALLERY -->
+<section class="section gallery" id="gallery">
+  <div class="reveal">
+    <p class="section-label">Notre portfolio</p>
+    <h2 class="section-title">Nos réalisations en images</h2>
+    <p class="section-sub">Un aperçu de nos projets les plus marquants à travers différents secteurs d'activité.</p>
+  </div>
+  <div class="gallery-grid reveal">
+
+    <div class="gallery-item">
+      <div class="gal-img g1" style="display:flex;align-items:center;justify-content:center;">
+        <div class="gal-icon">📣</div>
+      </div>
+      <div class="gallery-overlay">Campagne Brand Awareness</div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gal-img g2" style="display:flex;align-items:center;justify-content:center;">
+        <div class="gal-icon">🎨</div>
+      </div>
+      <div class="gallery-overlay">Identité Visuelle</div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gal-img g3" style="display:flex;align-items:center;justify-content:center;">
+        <div class="gal-icon">📸</div>
+      </div>
+      <div class="gallery-overlay">Shooting Produit</div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gal-img g4" style="display:flex;align-items:center;justify-content:center;">
+        <div class="gal-icon">🌐</div>
+      </div>
+      <div class="gallery-overlay">Site Web Corporate</div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gal-img g5" style="display:flex;align-items:center;justify-content:center;">
+        <div class="gal-icon">📱</div>
+      </div>
+      <div class="gallery-overlay">Social Media Campaign</div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gal-img g6" style="display:flex;align-items:center;justify-content:center;">
+        <div class="gal-icon">🎬</div>
+      </div>
+      <div class="gallery-overlay">Production Vidéo</div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gal-img g7" style="display:flex;align-items:center;justify-content:center;">
+        <div class="gal-icon">⚡</div>
+      </div>
+      <div class="gallery-overlay">Stratégie Digitale</div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gal-img g8" style="display:flex;align-items:center;justify-content:center;">
+        <div class="gal-icon">🏆</div>
+      </div>
+      <div class="gallery-overlay">Event & Activation</div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gal-img g9" style="display:flex;align-items:center;justify-content:center;">
+        <div class="gal-icon">💡</div>
+      </div>
+      <div class="gallery-overlay">Conseil & Stratégie</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="about-grid reveal">
+    <div class="about-img-wrap">
+      <div class="big-icon">⚡</div>
+      <div class="about-badge">🏆 Agence #1 en communication</div>
+    </div>
+    <div class="about-text">
+      <p class="section-label">Qui sommes-nous</p>
+      <h2 class="section-title">Une équipe passionnée à votre service</h2>
+      <p class="section-sub">AvOne est une agence de communication full-service, fondée sur la conviction que chaque marque mérite une voix unique et percutante. Nous combinons créativité et data pour des résultats mesurables.</p>
+      <ul class="about-list">
+        <li>Approche 100% personnalisée et sur-mesure</li>
+        <li>Équipe pluridisciplinaire de créatifs et stratèges</li>
+        <li>Livrables dans les délais, toujours</li>
+        <li>Suivi des performances et reporting détaillé</li>
+        <li>Partenaire de croissance long terme</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band reveal" id="contact">
+  <h2>Prêt à booster votre <em>communication</em> ?</h2>
+  <p>Discutons de votre projet et voyons comment AvOne peut transformer votre visibilité.</p>
+  <a href="https://wa.me/+33600000000?text=Bonjour%20AvOne%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services." class="btn-primary" target="_blank">💬 Contactez-nous sur WhatsApp</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="/mnt/user-data/uploads/Design_sans_titre.png" alt="AvOne">
+      <p>Votre partenaire de confiance pour une communication impactante et des stratégies digitales performantes.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Réseaux Sociaux</a></li>
+        <li><a href="#">Identité Visuelle</a></li>
+        <li><a href="#">Photo & Vidéo</a></li>
+        <li><a href="#">Web & Digital</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Entreprise</h4>
+      <ul>
+        <li><a href="#">À propos</a></li>
+        <li><a href="#">Notre équipe</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Email</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AvOne Communication. Tous droits réservés.</span>
+    <a href="#">Politique de confidentialité</a>
+  </div>
+</footer>
+
+<!-- WHATSAPP FAB -->
+<a class="wa-fab" href="https://wa.me/+33600000000?text=Bonjour%20AvOne%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services." target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+<div class="wa-tooltip">Écrivez-nous sur WhatsApp !</div>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
